@@ -16,8 +16,8 @@ def requirements():
 
 setup(
     name='heluxup',
-    version=getenv('TAG', default=datetime.now().strftime('%Y.%m.%d.dev%H%M%S')),
-    description='A tool to upgrade HelmRelease objects in a flux control repository.',
+    version=getenv('GITHUB_REF', default=datetime.now().strftime('%Y.%m.%d.dev%H%M%S')),
+    description='heluxup makes it easy to upgrade HelmRelease objects in a flux control respository.',
     long_description=readme(),
     url='https://github.com/ekeih/heluxup',
     author='Max Rosin',
