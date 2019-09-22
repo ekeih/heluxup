@@ -19,6 +19,7 @@ setup(
     version=getenv('GITHUB_REF', default=datetime.now().strftime('%Y.%m.%d.dev%H%M%S')),
     description='heluxup makes it easy to upgrade HelmRelease objects in a flux control respository.',
     long_description=readme(),
+    long_description_content_type='text/markdown',
     url='https://github.com/ekeih/heluxup',
     author='Max Rosin',
     author_email='heluxup@hackrid.de',

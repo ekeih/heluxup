@@ -64,6 +64,7 @@ $ heluxup -d /home/max/repos/flux-control/
 ```
 
 ## License
+
 ```
 heluxup makes it easy to upgrade HelmRelease objects in a flux control respository.
 Copyright (C) 2019  Max Rosin
