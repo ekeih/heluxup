@@ -26,7 +26,7 @@ def requirements():
 
 setup(
     name='heluxup',
-    version=getenv('GITHUB_REF', default=datetime.now().strftime('%Y.%m.%d.dev%H%M%S')),
+    version=getenv('GITHUB_REF', default=datetime.now().strftime('%Y.%m.%d.dev%H%M%S')).lstrip('refs/tags/'),
     description='heluxup makes it easy to upgrade HelmRelease objects in a flux control respository.',
     long_description=readme(),
     long_description_content_type='text/markdown',
