@@ -35,3 +35,10 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.pypi_password }}
+    - name: Create a GitHub release
+      if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+      uses: elgohr/Github-Release-Action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: Automated release
