@@ -1,16 +1,26 @@
+"""
+Setup to install heluxup as a Python package.
+"""
+
 from datetime import datetime
 from os import getenv
 from setuptools import find_packages, setup
 
 
 def readme():
-    with open('README.md') as f:
-        return f.read()
+    """
+    Read the full README.md file as a string.
+    """
+    with open('README.md') as file_read:
+        return file_read.read()
 
 
 def requirements():
-    with open('requirements.txt') as f:
-        requirements_file = f.readlines()
+    """
+    Read the requirements.txt file as a list of strings.
+    """
+    with open('requirements.txt') as file_read:
+        requirements_file = file_read.readlines()
     return [r.strip() for r in requirements_file]
 
 
