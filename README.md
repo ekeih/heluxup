@@ -63,6 +63,16 @@ $ heluxup -d /home/max/repos/flux-control/
 [dry-run] If you are sure about the changes commit them to your flux repository to apply them to your cluster.
 ```
 
+## Release
+
+1. Tag a new release `git tag 0.2.0`
+2. Push it `git push origin 0.2.0`
+3. The CI will build a new package and release it to [PyPI](https://pypi.org/project/heluxup/)
+4. To build a new [AUR](https://aur.archlinux.org) package clone `ssh://aur@aur.archlinux.org/heluxup.git`
+5. Adjust the version and dependencies in PKGBUILD
+6. Run `makepkg --printsrcinfo > .SRCINFO`
+7. Commit the changes and push the [AUR package](https://aur.archlinux.org/packages/heluxup)
+
 ## License
 
 ```
