@@ -23,7 +23,7 @@ class HelmRelease:
     def __init__(self, release_name, chart_name, repository, git_version):
         self.release_name = release_name
         self.chart_name = chart_name
-        self.repository = repository
+        self.repository = repository.rstrip('/')
         self.git_version = git_version
 
         if self.repository not in REPO_CACHE:
