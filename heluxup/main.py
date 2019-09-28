@@ -13,6 +13,7 @@ from ruamel.yaml import YAML
 HTTP = urllib3.PoolManager()
 YAML_PARSER = YAML()
 YAML_PARSER.preserve_quotes = True
+YAML_PARSER.explicit_start = True
 YAML_PARSER.width = 8000
 REPO_CACHE = {}
 
