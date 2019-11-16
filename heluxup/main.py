@@ -72,7 +72,7 @@ def cli(dry_run, git_directory):
                 with open(path, 'r') as file_read:
                     docs = list(YAML_PARSER.load_all(file_read))
                     for release in docs:
-                        if 'kind' in release and release['kind'] == 'HelmRelease':
+                        if release is not None and 'kind' in release and release['kind'] == 'HelmRelease':
                             helm_release = HelmRelease(
                                 release_name=release['spec']['releaseName'],
                                 chart_name=release['spec']['chart']['name'],
