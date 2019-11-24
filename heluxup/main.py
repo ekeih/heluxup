@@ -60,7 +60,7 @@ class HelmRelease:
 @click.argument('git-directory', type=click.Path(exists=True, file_okay=False, dir_okay=True,
                                                  writable=True, readable=True))
 @click.option('--unstable', '-u', is_flag=True, default=False, help='Also update to unstable versions, a.k.a. versions'
-                                                                    'with pre-release identifiers')
+                                                                    ' with pre-release identifiers.')
 def cli(dry_run, git_directory, unstable):
     """
     By using the flux helm operator (https://github.com/fluxcd/helm-operator-get-started) it is possible to manage
