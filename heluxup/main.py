@@ -17,11 +17,13 @@ YAML_PARSER.explicit_start = True
 YAML_PARSER.width = 8000
 REPO_CACHE = {}
 
+
 class HelmRelease:
     """
     HelmRelease represents a HelmRelease object that is used by flux.
     """
-    def __init__(self, release_name, chart_name, repository, git_version):
+
+    def __init__(self, release_name, chart_name, repository, git_version, unstable):
         self.release_name = release_name
         self.chart_name = chart_name
         self.repository = repository.rstrip('/')
@@ -33,9 +35,16 @@ class HelmRelease:
 
         self.available_versions = [version['version'] for
                                    version in REPO_CACHE[self.repository]['entries'][self.chart_name]]
+        if unstable:
+            self.latest_version = self.available_versions[0]
+            chosen_versions = self.available_versions[1:]
+        else:
+            stable_versions = [version for version in self.available_versions if
+                               semver.parse_version_info(version.lstrip('v')).prerelease is None]
+            self.latest_version = stable_versions[0]
+            chosen_versions = stable_versions[1:]
 
-        self.latest_version = self.available_versions[0]
-        for version in self.available_versions[1:]:
+        for version in chosen_versions:
             self.latest_version = version if semver.compare(self.latest_version.lstrip('v'),
                                                             version.lstrip('v')) < 0 else self.latest_version
 
@@ -50,7 +59,9 @@ class HelmRelease:
 @click.option('--dry-run', '-d', is_flag=True, default=False, help='Print available updates without any modifications.')
 @click.argument('git-directory', type=click.Path(exists=True, file_okay=False, dir_okay=True,
                                                  writable=True, readable=True))
-def cli(dry_run, git_directory):
+@click.option('--unstable', '-u', is_flag=True, default=False, help='Also update to unstable versions, a.k.a. versions'
+                                                                    'with pre-release identifiers')
+def cli(dry_run, git_directory, unstable):
     """
     By using the flux helm operator (https://github.com/fluxcd/helm-operator-get-started) it is possible to manage
     helm charts in a git repository and flux takes care of the deployment.
@@ -78,6 +89,7 @@ def cli(dry_run, git_directory):
                                 chart_name=release['spec']['chart']['name'],
                                 repository=release['spec']['chart']['repository'],
                                 git_version=release['spec']['chart']['version'],
+                                unstable=unstable,
                             )
                             if helm_release.git_version != helm_release.latest_version:
                                 click.echo('{}Updating release {} ({}) from {} to {}'
